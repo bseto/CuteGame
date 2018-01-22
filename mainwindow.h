@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QDebug>
+#include <QTimer>
+#include <QTime>
+#include <QWidget>
 
 namespace Ui {
 class MainWindow;
@@ -25,11 +28,14 @@ private:
 
     Ui::MainWindow *ui;
     QPushButton *button_;
+    QWidget timeWidget_;
+
     int score_;
     int clicks_;
 
     QTimer *timer_;
     QTime *timeValue_;
+
 };
 
 #endif // MAINWINDOW_H

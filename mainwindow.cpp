@@ -6,13 +6,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     score_(0)
 {
-
     ui->setupUi(this);
-    button_ = new QPushButton("Sam Ao", this);
-    button_->setGeometry(QRect(QPoint(100,100), QSize(40, 20)));
 
-    qInfo() << "Connecting the button to function";
+    button_ = new QPushButton("Sam Ao", this);
+    button_->setGeometry(QRect(QPoint(100,100), QSize(200, 50)));
+
     connect(button_, SIGNAL (pressed()), this, SLOT(handlePressMe()));
+
+    timer_ = new QTimer();
+    timeValue_ = new QTime(0, 0, 0);
 }
 
 void MainWindow::updateScore() {
@@ -32,5 +34,5 @@ MainWindow::~MainWindow()
     delete ui;
     delete button_;
     delete timer_;
-    delete timeValue;
+    delete timeValue_;
 }
