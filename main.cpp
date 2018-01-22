@@ -11,8 +11,6 @@ int main(int argc, char *argv[])
     w.setWindowTitle
             ((QApplication::translate("childwidget", "Child widget")));
 
-    QWidget *game_timer = new QWidget(window);
-
 
     w.show();
 

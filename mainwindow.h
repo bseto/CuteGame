@@ -3,10 +3,11 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QMouseEvent>
 #include <QDebug>
 #include <QTimer>
 #include <QTime>
-#include <QWidget>
+#include <QLabel>
 
 namespace Ui {
 class MainWindow;
@@ -20,15 +21,19 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+
 private slots:
     void handlePressMe();
+    void setDisplay();
 
 private:
     void updateScore();
+    void updateClicks();
 
     Ui::MainWindow *ui;
     QPushButton *button_;
-    QWidget timeWidget_;
 
     int score_;
     int clicks_;
