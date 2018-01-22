@@ -1,0 +1,3 @@
+= Cute Game! (Qt)
+
+End goal: a small lemonade stand game
