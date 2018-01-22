@@ -4,7 +4,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    score_(0)
+    score_(0),
+    clicks_(0)
 {
 
     ui->setupUi(this);
@@ -22,9 +23,14 @@ void MainWindow::updateScore() {
 
 void MainWindow::updateClicks() {
     clicks_++;
+    updateAccuracy();
     ui->ClicksCount->setText(QString::number(clicks_));
 }
 
+void MainWindow::updateAccuracy() {
+    double accuracy = (double) score_ / (double) clicks_ * 100;
+    ui->AccuracyCount->setText(QString::number(accuracy, 'g', 5) + "%");
+}
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
