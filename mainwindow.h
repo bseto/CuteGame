@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QTimer>
+#include <QTime>
 
 namespace Ui {
 class MainWindow;
@@ -25,9 +27,16 @@ private slots:
     void handlePressMe();
 
 private:
+    void updateScore();
+    void updateClicks();
+
     Ui::MainWindow *ui;
     QPushButton *button_;
+    int score_;
     int clicks_;
+
+    QTimer *timer_;
+    QTime *timeValue_;
 };
 
 #endif // MAINWINDOW_H
