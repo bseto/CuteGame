@@ -1,6 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <sstream>
+#include <iomanip>
+#include <iostream>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QMouseEvent>
@@ -31,6 +34,7 @@ private slots:
 private:
     void updateScore();
     void updateClicks();
+    void updateAccuracy();
 
     Ui::MainWindow *ui;
     QPushButton *button_;
