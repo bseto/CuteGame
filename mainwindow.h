@@ -21,8 +21,15 @@ private slots:
     void handlePressMe();
 
 private:
+    void updateScore();
+
     Ui::MainWindow *ui;
     QPushButton *button_;
+    int score_;
+    int clicks_;
+
+    QTimer *timer_;
+    QTime *timeValue_;
 };
 
 #endif // MAINWINDOW_H
