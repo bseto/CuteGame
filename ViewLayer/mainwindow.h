@@ -41,6 +41,8 @@ private:
     Ui::MainWindow *ui;
     QPushButton *button_;
 
+    setupConnections();
+    setupViewStatsConnections();
     ViewStats *viewStats_;
 };
 
