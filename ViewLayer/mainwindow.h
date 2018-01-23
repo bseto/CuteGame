@@ -30,6 +30,7 @@ private slots:
     void screenUpdateScore(int score);
     void screenUpdateClicks(int clicks);
     void screenUpdateAccuracy(double accuracy);
+    void screenUpdateTimer(QString time);
 
 signals:
     void emitMousePressEvent(QMouseEvent *event);

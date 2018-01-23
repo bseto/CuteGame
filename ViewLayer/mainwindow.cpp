@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(screenUpdateClicks(int)));
     connect(viewStats_, SIGNAL(emitUpdateAccuracy(double)),
             this, SLOT(screenUpdateAccuracy(double)));
+    connect(viewStats_, SIGNAL(emitUpdateTimer(QString)),
+            this, SLOT(screenUpdateTimer(QString)));
     connect(this, SIGNAL(emitMousePressEvent(QMouseEvent*)),
             viewStats_, SLOT(handleEmptyPress(QMouseEvent*)));
 }
@@ -51,6 +53,10 @@ void MainWindow::screenUpdateClicks(int clicks) {
 }
 void MainWindow::screenUpdateAccuracy(double accuracy) {
     ui->AccuracyCount->setText(QString::number(accuracy, 'g', 5) + "%");
+}
+
+void MainWindow::screenUpdateTimer(QString time){
+    ui->TimeCount->setText(time);
 }
 
 
