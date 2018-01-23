@@ -13,15 +13,14 @@ MainWindow::MainWindow(QWidget *parent) :
     button_->setGeometry(QRect(QPoint(100,100), QSize(200, 50)));
 
     setupConnections();
-
 }
 
-MainWindow::setupConnections() {
+void MainWindow::setupConnections() {
     //Probably going to be lots of connections to this MainWindow
     setupViewStatsConnections();
 }
 
-MainWindow::setupViewStatsConnections(){
+void MainWindow::setupViewStatsConnections(){
     connect(button_, SIGNAL(pressed()),
             viewStats_, SLOT(handlePressMe()));
     connect(viewStats_, SIGNAL(emitUpdateScore(int)),
