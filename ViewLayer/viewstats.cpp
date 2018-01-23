@@ -1,9 +1,10 @@
 
 #include "ViewLayer/viewstats.h"
 
-ViewStats::ViewStats():
+ViewStats::ViewStats(int gameTimeS):
     timer_(new QTimer()),
-    timeValue_(new QTime(0, 0, 30)),
+    timeValue_(new QTime(0, 0, gameTimeS)),
+    gameTimeS_(gameTimeS),
     score_(0),
     clicks_(0)
 {
@@ -35,6 +36,15 @@ void ViewStats::handleTimerTick() {
         timeValue_->addSecs(-1).minute(),
         timeValue_->addSecs(-1).second());
     emitUpdateTimer(timeValue_->toString());
+
+    if (timeValue_->second() == 0 &&
+            timeValue_->minute() == 0 &&
+            timeValue_->hour() == 0)
+    {
+        timer_->stop();
+        emitTimesUp(score_, clicks_, gameTimeS_);
+    }
+
 }
 
 //PRIVATE

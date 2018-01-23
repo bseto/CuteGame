@@ -5,7 +5,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    viewStats_(new ViewStats)
+    viewStats_(new ViewStats(15)) //create a game with 15s timeout
 {
     ui->setupUi(this);
 
@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(button_, SIGNAL(pressed()),
             viewStats_, SLOT(handlePressMe()));
+
     connect(viewStats_, SIGNAL(emitUpdateScore(int)),
             this, SLOT(screenUpdateScore(int)));
     connect(viewStats_, SIGNAL(emitUpdateClicks(int)),
@@ -22,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(screenUpdateAccuracy(double)));
     connect(viewStats_, SIGNAL(emitUpdateTimer(QString)),
             this, SLOT(screenUpdateTimer(QString)));
+    connect(viewStats_, SIGNAL(emitTimesUp(int,int,int)),
+            this, SLOT(updateTimesUp(int,int,int)));
+
     connect(this, SIGNAL(emitMousePressEvent(QMouseEvent*)),
             viewStats_, SLOT(handleEmptyPress(QMouseEvent*)));
 }
@@ -57,6 +61,15 @@ void MainWindow::screenUpdateAccuracy(double accuracy) {
 
 void MainWindow::screenUpdateTimer(QString time){
     ui->TimeCount->setText(time);
+}
+
+void MainWindow::updateTimesUp(int score, int clicks, int gameTimeS){
+    //heavily assuming no one is going to put more than 60s :P
+    qDebug("------------------------------------------");
+    qDebug("Score %d | Total Clicks %d | Time 00:00:%d", score, clicks, gameTimeS);
+    qDebug("------------------------------------------");
+    qDebug("Accuracy: %lf%%", (double)score / (double)clicks * 100);
+    qDebug("Rate: %lf clicks/s", (double)score / (double)gameTimeS);
 }
 
 
