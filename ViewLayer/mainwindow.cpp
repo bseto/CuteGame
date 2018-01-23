@@ -1,6 +1,7 @@
 #include "ViewLayer/mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -12,14 +13,30 @@ MainWindow::MainWindow(QWidget *parent) :
     button_->setGeometry(QRect(QPoint(100,100), QSize(200, 50)));
 
     connect(button_, SIGNAL(pressed()),
-            &(*viewStats_), SLOT(handlePressMe())); //seems kinda hackery
-
-    connect(&(*viewStats_), SIGNAL(emitUpdateScore(int)),
+            viewStats_, SLOT(handlePressMe()));
+    connect(viewStats_, SIGNAL(emitUpdateScore(int)),
             this, SLOT(screenUpdateScore(int)));
-    connect(&(*viewStats_), SIGNAL(emitUpdateClicks(int)),
+    connect(viewStats_, SIGNAL(emitUpdateClicks(int)),
             this, SLOT(screenUpdateClicks(int)));
+    connect(viewStats_, SIGNAL(emitUpdateAccuracy(double)),
+            this, SLOT(screenUpdateAccuracy(double)));
+    connect(this, SIGNAL(emitMousePressEvent(QMouseEvent*)),
+            viewStats_, SLOT(handleEmptyPress(QMouseEvent*)));
 }
 
+MainWindow::~MainWindow()
+{
+    delete ui;
+    delete button_;
+    //delete timer_;
+    //delete timeValue_;
+}
+
+//PROTECTED
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    emitMousePressEvent(event);
+}
 
 //SLOTS
 void MainWindow::screenUpdateScore(int value) {
@@ -32,11 +49,8 @@ void MainWindow::screenUpdateScore(int value) {
 void MainWindow::screenUpdateClicks(int clicks) {
     ui->ClicksCount->setText(QString::number(clicks));
 }
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-    delete button_;
-    //delete timer_;
-    //delete timeValue_;
+void MainWindow::screenUpdateAccuracy(double accuracy) {
+    ui->AccuracyCount->setText(QString::number(accuracy, 'g', 5) + "%");
 }
+
+

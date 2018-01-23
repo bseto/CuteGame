@@ -2,6 +2,7 @@
 #define VIEWSTATS_H
 
 #include <QPushButton>
+#include <QMouseEvent>
 
 
 class ViewStats : public QObject
@@ -12,21 +13,18 @@ public:
     explicit ViewStats();
     ~ViewStats();
 
-protected:
-    //void mousePressEvent(QMouseEvent *event) override;
-
 private slots:
     void handlePressMe();
+    void handleEmptyPress(QMouseEvent* event);
 
 signals:
     void emitUpdateScore(int score);
     void emitUpdateClicks(int clicks);
-    void emitUpdateAccuracy(int accuracy);
+    void emitUpdateAccuracy(double accuracy);
 
 private:
     void updateScore();
     void updateClicks();
-    void updateAccuracy();
 
 
     /*

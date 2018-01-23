@@ -15,6 +15,14 @@ void ViewStats::handlePressMe() {
     updateClicks();
 }
 
+void ViewStats::handleEmptyPress(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        // Update clicks will increment clicks and
+        // emit to update clicks and accuracy w/o incrementing score
+        updateClicks();
+    }
+}
+
 //PRIVATE
 void ViewStats::updateScore() {
     score_++;
@@ -23,4 +31,7 @@ void ViewStats::updateScore() {
 void ViewStats::updateClicks() {
     clicks_++;
     emitUpdateClicks(clicks_);
+    emitUpdateAccuracy((double) score_ / (double) clicks_ * 100);
 }
+
+
