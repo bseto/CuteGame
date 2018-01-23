@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "ViewLayer/mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    button_ = new QPushButton("Sam Ao", this);
+    button_ = new QPushButton("Click Me", this);
     button_->setGeometry(QRect(QPoint(100,100), QSize(200, 50)));
     connect(button_, SIGNAL (pressed()), this, SLOT(handlePressMe()));
 

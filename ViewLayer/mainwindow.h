@@ -8,9 +8,9 @@
 #include <QPushButton>
 #include <QMouseEvent>
 #include <QDebug>
-#include <QTimer>
-#include <QTime>
 #include <QLabel>
+#include <QTime>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +26,7 @@ public:
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
+
 
 private slots:
     void handlePressMe();
@@ -44,6 +45,7 @@ private:
 
     QTimer *timer_;
     QTime *timeValue_;
+
 
 };
 
