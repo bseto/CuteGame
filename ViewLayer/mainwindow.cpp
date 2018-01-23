@@ -4,62 +4,39 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    score_(0),
-    clicks_(0)
+    viewStats_(new ViewStats)
 {
     ui->setupUi(this);
 
     button_ = new QPushButton("Click Me", this);
     button_->setGeometry(QRect(QPoint(100,100), QSize(200, 50)));
-    connect(button_, SIGNAL (pressed()), this, SLOT(handlePressMe()));
 
-    timer_ = new QTimer();
-    timeValue_ = new QTime(0, 0, 30);
-    connect(timer_, SIGNAL(timeout()), this, SLOT(setDisplay()));
-    timer_->start(1000);
+    connect(button_, SIGNAL(pressed()),
+            &(*viewStats_), SLOT(handlePressMe())); //seems kinda hackery
+
+    connect(&(*viewStats_), SIGNAL(emitUpdateScore(int)),
+            this, SLOT(screenUpdateScore(int)));
+    connect(&(*viewStats_), SIGNAL(emitUpdateClicks(int)),
+            this, SLOT(screenUpdateClicks(int)));
 }
 
-void MainWindow::setDisplay() {
-    this->timeValue_->setHMS(0, this->timeValue_->addSecs(-1).minute(),
-                             this->timeValue_->addSecs(-1).second());
-    ui->TimeCount->setText(timeValue_->toString());
-}
 
-void MainWindow::updateScore() {
-    score_++;
-    ui->ScoreCount->setText(QString::number(score_));
-}
-
-void MainWindow::updateClicks() {
-    clicks_++;
-    updateAccuracy();
-    ui->ClicksCount->setText(QString::number(clicks_));
-}
-
-void MainWindow::updateAccuracy() {
-    double accuracy = (double) score_ / (double) clicks_ * 100;
-    ui->AccuracyCount->setText(QString::number(accuracy, 'g', 5) + "%");
-}
-
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton) {
-        updateClicks();
-    }
-}
-
-void MainWindow::handlePressMe(){
-    updateScore();
-    updateClicks();
+//SLOTS
+void MainWindow::screenUpdateScore(int value) {
     int x = qrand() % 1720;
     int y = qrand() % 1030;
     button_->setGeometry(QRect(QPoint(x,y), QSize(200, 50)));
+
+    ui->ScoreCount->setText(QString::number(value));
+}
+void MainWindow::screenUpdateClicks(int clicks) {
+    ui->ClicksCount->setText(QString::number(clicks));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
     delete button_;
-    delete timer_;
-    delete timeValue_;
+    //delete timer_;
+    //delete timeValue_;
 }

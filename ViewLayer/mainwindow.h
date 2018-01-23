@@ -5,12 +5,9 @@
 #include <iomanip>
 #include <iostream>
 #include <QMainWindow>
-#include <QPushButton>
-#include <QMouseEvent>
-#include <QDebug>
 #include <QLabel>
-#include <QTime>
-#include <QTimer>
+
+#include "ViewLayer/viewstats.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,29 +21,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-protected:
-    void mousePressEvent(QMouseEvent *event) override;
-
-
 private slots:
-    void handlePressMe();
-    void setDisplay();
+    void screenUpdateScore(int score);
+    void screenUpdateClicks(int clicks);
 
 private:
-    void updateScore();
-    void updateClicks();
-    void updateAccuracy();
-
     Ui::MainWindow *ui;
     QPushButton *button_;
 
-    int score_;
-    int clicks_;
-
-    QTimer *timer_;
-    QTime *timeValue_;
-
-
+    ViewStats *viewStats_;
 };
 
 #endif // MAINWINDOW_H
