@@ -38,7 +38,7 @@ signals:
     void emitMousePressEvent(QMouseEvent *event);
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui_;
     QPushButton *button_;
 
     void setupConnections();
